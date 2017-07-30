@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
-import me.maximpestryakov.yamblzweather.R;
+import timber.log.Timber;
 
 public class StringUtil {
 
@@ -16,13 +16,6 @@ public class StringUtil {
 
     public StringUtil(Context context) {
         this.context = context;
-    }
-
-    public String getErrorMessage(Throwable throwable) {
-        if (throwable instanceof NoInternetException) {
-            return context.getString(R.string.error_no_internet);
-        }
-        return context.getString(R.string.error_unknown);
     }
 
     public String readFromFile(String filename) throws IOException {
@@ -40,6 +33,7 @@ public class StringUtil {
     }
 
     public void writeToFile(String filename, String content) throws IOException {
+        Timber.d("Save data to file: %s", content);
         try (OutputStream outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE)) {
             outputStream.write(content.getBytes());
         }
